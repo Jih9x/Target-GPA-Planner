@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คำนวณเกรดเฉลี่ย</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="navbar">
+        <span>GPA Calculator</span>
+        <div id="languageSelector">
+            <select id="languageDropdown">
+                <option value="th">ภาษาไทย</option>
+                <option value="en">English</option>
+                <option value="zh">中文</option>
+            </select>
+        </div>
+    </div>
+    <div class="container">
+        <h1 data-lang="title">คำนวณเกรดเฉลี่ย</h1>
+        <form id="gradeForm">
+            <div class="form-row">
+                <label for="currentGPA" data-lang="currentGPA">กรอกเกรดเฉลี่ยปัจจุบัน:</label>
+                <input type="number" step="0.01" id="currentGPA" name="currentGPA" required>
+                <label for="currentCredits" data-lang="currentCredits">กรอกจำนวนหน่วยกิตปัจจุบัน:</label>
+                <input type="number" id="currentCredits" name="currentCredits" required>
+            </div>
+            <label for="desiredGPA" style="font-weight: bold; color: #6a8caf;" data-lang="desiredGPA">กรอกเกรดเฉลี่ยที่ต้องการ:</label>
+            <input type="number" step="0.01" id="desiredGPA" name="desiredGPA" class="highlight" required>
+            <div id="subjectsContainer">
+                <label data-lang="subjectsLabel">กรอกรายวิชาสำหรับเทอมถัดไป:</label>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 0.1%;"></th>
+                            <th style="width: 50%; text-align: left;" data-lang="subjectName">ชื่อวิชา</th>
+                            <th style="width: 50%; text-align: left;" data-lang="subjectCredits">หน่วยกิต</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subjectsTableBody">
+                        <!-- Add 5 subject input fields -->
+                        <tr class="subject">
+                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
+                            <td><input type="text" name="subjectName" placeholder="ชื่อวิชา" data-lang-placeholder="subjectNamePlaceholder"></td>
+                            <td><input type="number" name="subjectCredits" placeholder="หน่วยกิต" data-lang-placeholder="subjectCreditsPlaceholder"></td>
+                        </tr>
+                        <tr class="subject">
+                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
+                            <td><input type="text" name="subjectName" placeholder="ชื่อวิชา" data-lang-placeholder="subjectNamePlaceholder"></td>
+                            <td><input type="number" name="subjectCredits" placeholder="หน่วยกิต" data-lang-placeholder="subjectCreditsPlaceholder"></td>
+                        </tr>
+                        <tr class="subject">
+                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
+                            <td><input type="text" name="subjectName" placeholder="ชื่อวิชา" data-lang-placeholder="subjectNamePlaceholder"></td>
+                            <td><input type="number" name="subjectCredits" placeholder="หน่วยกิต" data-lang-placeholder="subjectCreditsPlaceholder"></td>
+                        </tr>
+                        <tr class="subject">
+                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
+                            <td><input type="text" name="subjectName" placeholder="ชื่อวิชา" data-lang-placeholder="subjectNamePlaceholder"></td>
+                            <td><input type="number" name="subjectCredits" placeholder="หน่วยกิต" data-lang-placeholder="subjectCreditsPlaceholder"></td>
+                        </tr>
+                        <tr class="subject">
+                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
+                            <td><input type="text" name="subjectName" placeholder="ชื่อวิชา" data-lang-placeholder="subjectNamePlaceholder"></td>
+                            <td><input type="number" name="subjectCredits" placeholder="หน่วยกิต" data-lang-placeholder="subjectCreditsPlaceholder"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><button type="button" id="addSubjectButton" class="addSubjectButton" data-lang="addSubject"><i class="fas fa-plus"></i> เพิ่มรายวิชา</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="buttonContainer">
+                <button type="button" id="resetFormButton" class="resetButton" data-lang="resetForm"><i class="fas fa-redo"></i> รีเซ็ตฟอร์ม</button>
+            </div>
+            <button type="submit" class="calculateButton" data-lang="calculateGPA"><i class="fas fa-calculator"></i> คำนวณเกรดที่ต้องการ</button>
+        </form>
+        <div id="result"></div>
+        <div id="summary"></div>
+        <div id="gradeReference">
+            <p data-lang="gradeReferenceTitle">เกณฑ์ที่ใช้อ้างอิง:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th data-lang="grade">ผลการเรียน</th>
+                        <th data-lang="points">แต้มคะแนน</th>
+                        <th data-lang="scoreRange">ช่วงคะแนน</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A</td>
+                        <td>4.0</td>
+                        <td>80-100</td>
+                    </tr>
+                    <tr>
+                        <td>B+</td>
+                        <td>3.5</td>
+                        <td>75-79</td>
+                    </tr>
+                    <tr>
+                        <td>B</td>
+                        <td>3.0</td>
+                        <td>70-74</td>
+                    </tr>
+                    <tr>
+                        <td>C+</</td>
+                        <td>2.5</td>
+                        <td>65-69</td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                        <td>2.0</td>
+                        <td>60-64</td>
+                    </tr>
+                    <tr>
+                        <td>D+</</td>
+                        <td>1.5</td>
+                        <td>55-59</td>
+                    </tr>
+                    <tr>
+                        <td>D</td>
+                        <td>1.0</td>
+                        <td>50-54</td>
+                    </tr>
+                    <tr>
+                        <td>F</td>
+                        <td>0.0</td>
+                        <td>0-49</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer>
+        <div id="bottomRightButtons" style="display: flex; flex-direction: column; align-items: flex-end; position: fixed; bottom: 10px; right: 10px; z-index: 1000;">
+            <button type="button" id="printButton" data-lang="printResults"><i class="fas fa-print"></i> พิมพ์ผลลัพธ์</button>
+            <button type="button" id="showGradeReferenceButton" data-lang="showGradeReference"><i class="fas fa-eye"></i> แสดงเกณฑ์ที่ใช้อ้างอิง</button>
+            <button type="button" id="hideGradeReferenceButton" style="display: none;" data-lang="hideGradeReference"><i class="fas fa-eye-slash"></i> ซ่อนเกณฑ์ที่ใช้อ้างอิง</button>
+            <button type="button" id="saveDataButton" data-lang="saveData"><i class="fas fa-save"></i> บันทึกข้อมูล</button>
+            <button type="button" id="loadDataButton" data-lang="loadData"><i class="fas fa-upload"></i> โหลดข้อมูล</button>
+        </div>
+        © 2025. ธีระพงศ์ เวหะ
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        const translations = {
+            th: {
+                title: "คำนวณเกรดเฉลี่ย",
+                currentGPA: "กรอกเกรดเฉลี่ยปัจจุบัน:",
+                currentCredits: "กรอกจำนวนหน่วยกิตปัจจุบัน:",
+                desiredGPA: "กรอกเกรดเฉลี่ยที่ต้องการ:",
+                subjectsLabel: "กรอกรายวิชาสำหรับเทอมถัดไป:",
+                subjectName: "ชื่อวิชา",
+                subjectCredits: "หน่วยกิต",
+                subjectNamePlaceholder: "ชื่อวิชา",
+                subjectCreditsPlaceholder: "หน่วยกิต",
+                addSubject: "เพิ่มรายวิชา",
+                resetForm: "รีเซ็ตฟอร์ม",
+                calculateGPA: "คำนวณเกรดที่ต้องการ",
+                printResults: "พิมพ์ผลลัพธ์",
+                showGradeReference: "แสดงเกณฑ์ที่ใช้อ้างอิง",
+                hideGradeReference: "ซ่อนเกณฑ์ที่ใช้อ้างอิง",
+                gradeReferenceTitle: "เกณฑ์ที่ใช้อ้างอิง:",
+                grade: "ผลการเรียน",
+                points: "แต้มคะแนน",
+                scoreRange: "ช่วงคะแนน",
+                saveData: "บันทึกข้อมูล",
+                loadData: "โหลดข้อมูล"
+            },
+            en: {
+                title: "GPA Calculator",
+                currentGPA: "Enter Current GPA:",
+                currentCredits: "Enter Current Credits:",
+                desiredGPA: "Enter Desired GPA:",
+                subjectsLabel: "Enter Subjects for Next Term:",
+                subjectName: "Subject Name",
+                subjectCredits: "Credits",
+                subjectNamePlaceholder: "Subject Name",
+                subjectCreditsPlaceholder: "Credits",
+                addSubject: "Add Subject",
+                resetForm: "Reset Form",
+                calculateGPA: "Calculate GPA",
+                printResults: "Print Results",
+                showGradeReference: "Show Grade Reference",
+                hideGradeReference: "Hide Grade Reference",
+                gradeReferenceTitle: "Grade Reference:",
+                grade: "Grade",
+                points: "Points",
+                scoreRange: "Score Range",
+                saveData: "Save Data",
+                loadData: "Load Data"
+            },
+            zh: {
+                title: "GPA计算器",
+                currentGPA: "输入当前GPA:",
+                currentCredits: "输入当前学分:",
+                desiredGPA: "输入期望的GPA:",
+                subjectsLabel: "输入下学期的科目:",
+                subjectName: "科目名称",
+                subjectCredits: "学分",
+                subjectNamePlaceholder: "科目名称",
+                subjectCreditsPlaceholder: "学分",
+                addSubject: "添加科目",
+                resetForm: "重置表单",
+                calculateGPA: "计算GPA",
+                printResults: "打印结果",
+                showGradeReference: "显示成绩参考",
+                hideGradeReference: "隐藏成绩参考",
+                gradeReferenceTitle: "成绩参考:",
+                grade: "成绩",
+                points: "分数",
+                scoreRange: "分数范围",
+                saveData: "保存数据",
+                loadData: "加载数据"
+            }
+        };
+
+        document.getElementById('languageDropdown').addEventListener('change', function() {
+            const selectedLanguage = this.value;
+            const elements = document.querySelectorAll('[data-lang]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-lang');
+                element.textContent = translations[selectedLanguage][key];
+            });
+            const placeholders = document.querySelectorAll('[data-lang-placeholder]');
+            placeholders.forEach(element => {
+                const key = element.getAttribute('data-lang-placeholder');
+                element.placeholder = translations[selectedLanguage][key];
+            });
+        });
+
+        document.getElementById('printButton').addEventListener('click', function() {
+            window.print();
+        });
+
+        document.getElementById('showGradeReferenceButton').addEventListener('click', function() {
+            document.getElementById('gradeReference').style.display = 'block';
+            document.getElementById('showGradeReferenceButton').style.display = 'none';
+            document.getElementById('hideGradeReferenceButton').style.display = 'inline-block';
+        });
+
+        document.getElementById('hideGradeReferenceButton').addEventListener('click', function() {
+            document.getElementById('gradeReference').style.display = 'none';
+            document.getElementById('showGradeReferenceButton').style.display = 'inline-block';
+            document.getElementById('hideGradeReferenceButton').style.display = 'none';
+        });
+
+        document.getElementById('saveDataButton').addEventListener('click', function() {
+            const data = {
+                currentGPA: document.getElementById('currentGPA').value,
+                currentCredits: document.getElementById('currentCredits').value,
+                desiredGPA: document.getElementById('desiredGPA').value,
+                subjects: []
+            };
+            const subjects = document.querySelectorAll('#subjectsTableBody .subject');
+            subjects.forEach(subject => {
+                const subjectName = subject.querySelector('input[name="subjectName"]').value;
+                const subjectCredits = subject.querySelector('input[name="subjectCredits"]').value;
+                data.subjects.push({ subjectName, subjectCredits });
+            });
+            localStorage.setItem('gradeData', JSON.stringify(data));
+            alert('Data saved successfully!');
+        });
+
+        document.getElementById('loadDataButton').addEventListener('click', function() {
+            const data = JSON.parse(localStorage.getItem('gradeData'));
+            if (data) {
+                document.getElementById('currentGPA').value = data.currentGPA;
+                document.getElementById('currentCredits').value = data.currentCredits;
+                document.getElementById('desiredGPA').value = data.desiredGPA;
+                const subjectsTableBody = document.getElementById('subjectsTableBody');
+                subjectsTableBody.innerHTML = '';
+                data.subjects.forEach(subject => {
+                    const row = document.createElement('tr');
+                    row.classList.add('subject');
+                    row.innerHTML = `
+                        <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
+                        <td><input type="text" name="subjectName" placeholder="ชื่อวิชา" data-lang-placeholder="subjectNamePlaceholder" value="${subject.subjectName}"></td>
+                        <td><input type="number" name="subjectCredits" placeholder="หน่วยกิต" data-lang-placeholder="subjectCreditsPlaceholder" value="${subject.subjectCredits}"></td>
+                    `;
+                    subjectsTableBody.appendChild(row);
+                });
+                alert('Data loaded successfully!');
+            } else {
+                alert('No data found!');
+            }
+        });
+    </script>
+</body>
+</html>
