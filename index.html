@@ -7,153 +7,14 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
-<body>
-    <div class="navbar">
-        <span>GPA Calculator</span>
-        <div id="languageSelector">
-            <select id="languageDropdown">
-                <option value="th">ภาษาไทย</option>
-                <option value="en">English</option>
-                <option value="zh">中文</option>
-            </select>
-        </div>
-    </div>
-    <div class="container">
-        <h1 data-lang="title">คำนวณเกรดเฉลี่ย</h1>
-        <form id="gradeForm">
-            <div class="form-row">
-                <label for="currentGPA" data-lang="currentGPA">กรอกเกรดเฉลี่ยปัจจุบัน:</label>
-                <input type="number" step="0.01" id="currentGPA" name="currentGPA" required>
-                <label for="currentCredits" data-lang="currentCredits">กรอกจำนวนหน่วยกิตปัจจุบัน:</label>
-                <input type="number" id="currentCredits" name="currentCredits" required>
-            </div>
-            <label for="desiredGPA" style="font-weight: bold; color: #6a8caf;" data-lang="desiredGPA">กรอกเกรดเฉลี่ยที่ต้องการ:</label>
-            <input type="number" step="0.01" id="desiredGPA" name="desiredGPA" class="highlight" required>
-            <div id="subjectsContainer">
-                <label data-lang="subjectsLabel">กรอกรายวิชาสำหรับเทอมถัดไป:</label>
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="width: 0.1%;"></th>
-                            <th style="width: 50%; text-align: left;" data-lang="subjectName">ชื่อวิชา</th>
-                            <th style="width: 50%; text-align: left;" data-lang="subjectCredits">หน่วยกิต</th>
-                        </tr>
-                    </thead>
-                    <tbody id="subjectsTableBody">
-                        <!-- Add 5 subject input fields -->
-                        <tr class="subject">
-                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
-                            <td><input type="text" name="subjectName" placeholder="ชื่อวิชา" data-lang-placeholder="subjectNamePlaceholder"></td>
-                            <td><input type="number" name="subjectCredits" placeholder="หน่วยกิต" data-lang-placeholder="subjectCreditsPlaceholder"></td>
-                        </tr>
-                        <tr class="subject">
-                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
-                            <td><input type="text" name="subjectName" placeholder="ชื่อวิชา" data-lang-placeholder="subjectNamePlaceholder"></td>
-                            <td><input type="number" name="subjectCredits" placeholder="หน่วยกิต" data-lang-placeholder="subjectCreditsPlaceholder"></td>
-                        </tr>
-                        <tr class="subject">
-                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
-                            <td><input type="text" name="subjectName" placeholder="ชื่อวิชา" data-lang-placeholder="subjectNamePlaceholder"></td>
-                            <td><input type="number" name="subjectCredits" placeholder="หน่วยกิต" data-lang-placeholder="subjectCreditsPlaceholder"></td>
-                        </tr>
-                        <tr class="subject">
-                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
-                            <td><input type="text" name="subjectName" placeholder="ชื่อวิชา" data-lang-placeholder="subjectNamePlaceholder"></td>
-                            <td><input type="number" name="subjectCredits" placeholder="หน่วยกิต" data-lang-placeholder="subjectCreditsPlaceholder"></td>
-                        </tr>
-                        <tr class="subject">
-                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
-                            <td><input type="text" name="subjectName" placeholder="ชื่อวิชา" data-lang-placeholder="subjectNamePlaceholder"></td>
-                            <td><input type="number" name="subjectCredits" placeholder="หน่วยกิต" data-lang-placeholder="subjectCreditsPlaceholder"></td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><button type="button" id="addSubjectButton" class="addSubjectButton" data-lang="addSubject"><i class="fas fa-plus"></i> เพิ่มรายวิชา</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="buttonContainer">
-                <button type="button" id="resetFormButton" class="resetButton" data-lang="resetForm"><i class="fas fa-redo"></i> รีเซ็ตฟอร์ม</button>
-            </div>
-            <button type="submit" class="calculateButton" data-lang="calculateGPA"><i class="fas fa-calculator"></i> คำนวณเกรดที่ต้องการ</button>
-        </form>
-        <div id="result"></div>
-        <div id="summary"></div>
-        <div id="gradeReference">
-            <p data-lang="gradeReferenceTitle">เกณฑ์ที่ใช้อ้างอิง:</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th data-lang="grade">ผลการเรียน</th>
-                        <th data-lang="points">แต้มคะแนน</th>
-                        <th data-lang="scoreRange">ช่วงคะแนน</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>A</td>
-                        <td>4.0</td>
-                        <td>80-100</td>
-                    </tr>
-                    <tr>
-                        <td>B+</td>
-                        <td>3.5</td>
-                        <td>75-79</td>
-                    </tr>
-                    <tr>
-                        <td>B</td>
-                        <td>3.0</td>
-                        <td>70-74</td>
-                    </tr>
-                    <tr>
-                        <td>C+</</td>
-                        <td>2.5</td>
-                        <td>65-69</td>
-                    </tr>
-                    <tr>
-                        <td>C</td>
-                        <td>2.0</td>
-                        <td>60-64</td>
-                    </tr>
-                    <tr>
-                        <td>D+</</td>
-                        <td>1.5</td>
-                        <td>55-59</td>
-                    </tr>
-                    <tr>
-                        <td>D</td>
-                        <td>1.0</td>
-                        <td>50-54</td>
-                    </tr>
-                    <tr>
-                        <td>F</td>
-                        <td>0.0</td>
-                        <td>0-49</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <footer>
-        <div id="bottomRightButtons" style="display: flex; flex-direction: column; align-items: flex-end; position: fixed; bottom: 10px; right: 10px; z-index: 1000;">
-            <button type="button" id="printButton" data-lang="printResults"><i class="fas fa-print"></i> พิมพ์ผลลัพธ์</button>
-            <button type="button" id="showGradeReferenceButton" data-lang="showGradeReference"><i class="fas fa-eye"></i> แสดงเกณฑ์ที่ใช้อ้างอิง</button>
-            <button type="button" id="hideGradeReferenceButton" style="display: none;" data-lang="hideGradeReference"><i class="fas fa-eye-slash"></i> ซ่อนเกณฑ์ที่ใช้อ้างอิง</button>
-            <button type="button" id="saveDataButton" data-lang="saveData"><i class="fas fa-save"></i> บันทึกข้อมูล</button>
-            <button type="button" id="loadDataButton" data-lang="loadData"><i class="fas fa-upload"></i> โหลดข้อมูล</button>
-        </div>
-        © 2025. ธีระพงศ์ เวหะ
-    </footer>
-    <script src="script.js"></script>
     <script>
         const translations = {
             th: {
-                title: "คำนวณเกรดเฉลี่ย",
-                currentGPA: "กรอกเกรดเฉลี่ยปัจจุบัน:",
-                currentCredits: "กรอกจำนวนหน่วยกิตปัจจุบัน:",
-                desiredGPA: "กรอกเกรดเฉลี่ยที่ต้องการ:",
-                subjectsLabel: "กรอกรายวิชาสำหรับเทอมถัดไป:",
+                title: "คำนวณเกรดเฉลี่ย (GPAX) ",
+                currentGPA: "กรอกเกรดเฉลี่ยปัจจุบัน(GPAX)",
+                currentCredits: "กรอกจำนวนหน่วยกิตปัจจุบัน",
+                desiredGPA: "กรอกเกรดเฉลี่ยที่ต้องการ (GPAX)",
+                subjectsLabel: "กรอกรายวิชาสำหรับเทอมถัดไป",
                 subjectName: "ชื่อวิชา",
                 subjectCredits: "หน่วยกิต",
                 subjectNamePlaceholder: "ชื่อวิชา",
@@ -162,7 +23,7 @@
                 resetForm: "รีเซ็ตฟอร์ม",
                 calculateGPA: "คำนวณเกรดที่ต้องการ",
                 printResults: "พิมพ์ผลลัพธ์",
-                showGradeReference: "แสดงเกณฑ์ที่ใช้อ้างอิง",
+                showGradeReference: "เกณฑ์ที่ใช้อ้างอิง",
                 hideGradeReference: "ซ่อนเกณฑ์ที่ใช้อ้างอิง",
                 gradeReferenceTitle: "เกณฑ์ที่ใช้อ้างอิง:",
                 grade: "ผลการเรียน",
@@ -216,6 +77,167 @@
                 scoreRange: "分数范围",
                 saveData: "保存数据",
                 loadData: "加载数据"
+            },
+            hi: {
+                title: "जीपीए कैलकुलेटर",
+                currentGPA: "वर्तमान जीपीए दर्ज करें:",
+                currentCredits: "वर्तमान क्रेडिट दर्ज करें:",
+                desiredGPA: "वांछित जीपीए दर्ज करें:",
+                subjectsLabel: "अगले सत्र के लिए विषय दर्ज करें:",
+                subjectName: "विषय का नाम",
+                subjectCredits: "क्रेडिट",
+                subjectNamePlaceholder: "विषय का नाम",
+                subjectCreditsPlaceholder: "क्रेडिट",
+                addSubject: "विषय जोड़ें",
+                resetForm: "फॉर्म रीसेट करें",
+                calculateGPA: "जीपीए की गणना करें",
+                printResults: "परिणाम प्रिंट करें",
+                showGradeReference: "ग्रेड संदर्भ दिखाएं",
+                hideGradeReference: "ग्रेड संदर्भ छिपाएं",
+                gradeReferenceTitle: "ग्रेड संदर्भ:",
+                grade: "ग्रेड",
+                points: "अंक",
+                scoreRange: "स्कोर रेंज",
+                saveData: "डेटा सहेजें",
+                loadData: "डेटा लोड करें"
+            },
+            es: {
+                title: "Calculadora de GPA",
+                currentGPA: "Ingrese el GPA actual:",
+                currentCredits: "Ingrese los créditos actuales:",
+                desiredGPA: "Ingrese el GPA deseado:",
+                subjectsLabel: "Ingrese las materias para el próximo semestre:",
+                subjectName: "Nombre de la materia",
+                subjectCredits: "Créditos",
+                subjectNamePlaceholder: "Nombre de la materia",
+                subjectCreditsPlaceholder: "Créditos",
+                addSubject: "Agregar materia",
+                resetForm: "Restablecer formulario",
+                calculateGPA: "Calcular GPA",
+                printResults: "Imprimir resultados",
+                showGradeReference: "Mostrar referencia de calificaciones",
+                hideGradeReference: "Ocultar referencia de calificaciones",
+                gradeReferenceTitle: "Referencia de calificaciones:",
+                grade: "Calificación",
+                points: "Puntos",
+                scoreRange: "Rango de puntuación",
+                saveData: "Guardar datos",
+                loadData: "Cargar datos"
+            },
+            fr: {
+                title: "Calculateur de GPA",
+                currentGPA: "Entrez le GPA actuel:",
+                currentCredits: "Entrez les crédits actuels:",
+                desiredGPA: "Entrez le GPA souhaité:",
+                subjectsLabel: "Entrez les matières pour le prochain semestre:",
+                subjectName: "Nom de la matière",
+                subjectCredits: "Crédits",
+                subjectNamePlaceholder: "Nom de la matière",
+                subjectCreditsPlaceholder: "Crédits",
+                addSubject: "Ajouter une matière",
+                resetForm: "Réinitialiser le formulaire",
+                calculateGPA: "Calculer le GPA",
+                printResults: "Imprimer les résultats",
+                showGradeReference: "Afficher la référence des notes",
+                hideGradeReference: "Masquer la référence des notes",
+                gradeReferenceTitle: "Référence des notes:",
+                grade: "Note",
+                points: "Points",
+                scoreRange: "Plage de scores",
+                saveData: "Enregistrer les données",
+                loadData: "Charger les données"
+            },
+            ko: {
+                title: "GPA 계산기",
+                currentGPA: "현재 GPA 입력:",
+                currentCredits: "현재 학점 입력:",
+                desiredGPA: "희망 GPA 입력:",
+                subjectsLabel: "다음 학기 과목 입력:",
+                subjectName: "과목명",
+                subjectCredits: "학점",
+                subjectNamePlaceholder: "과목명",
+                subjectCreditsPlaceholder: "학점",
+                addSubject: "과목 추가",
+                resetForm: "양식 재설정",
+                calculateGPA: "GPA 계산",
+                printResults: "결과 인쇄",
+                showGradeReference: "성적 참조 표시",
+                hideGradeReference: "성적 참조 숨기기",
+                gradeReferenceTitle: "성적 참조:",
+                grade: "성적",
+                points: "점수",
+                scoreRange: "점수 범위",
+                saveData: "데이터 저장",
+                loadData: "데이터 로드"
+            },
+            ja: {
+                title: "GPA計算機",
+                currentGPA: "現在のGPAを入力:",
+                currentCredits: "現在の単位を入力:",
+                desiredGPA: "希望するGPAを入力:",
+                subjectsLabel: "次の学期の科目を入力:",
+                subjectName: "科目名",
+                subjectCredits: "単位",
+                subjectNamePlaceholder: "科目名",
+                subjectCreditsPlaceholder: "単位",
+                addSubject: "科目を追加",
+                resetForm: "フォームをリセット",
+                calculateGPA: "GPAを計算",
+                printResults: "結果を印刷",
+                showGradeReference: "成績参照を表示",
+                hideGradeReference: "成績参照を非表示",
+                gradeReferenceTitle: "成績参照:",
+                grade: "成績",
+                points: "ポイント",
+                scoreRange: "スコア範囲",
+                saveData: "データを保存",
+                loadData: "データをロード"
+            },
+            ru: {
+                title: "Калькулятор GPA",
+                currentGPA: "Введите текущий GPA:",
+                currentCredits: "Введите текущие кредиты:",
+                desiredGPA: "Введите желаемый GPA:",
+                subjectsLabel: "Введите предметы на следующий семестр:",
+                subjectName: "Название предмета",
+                subjectCredits: "Кредиты",
+                subjectNamePlaceholder: "Название предмета",
+                subjectCreditsPlaceholder: "Кредиты",
+                addSubject: "Добавить предмет",
+                resetForm: "Сбросить форму",
+                calculateGPA: "Рассчитать GPA",
+                printResults: "Распечатать результаты",
+                showGradeReference: "Показать справочник оценок",
+                hideGradeReference: "Скрыть справочник оценок",
+                gradeReferenceTitle: "Справочник оценок:",
+                grade: "Оценка",
+                points: "Баллы",
+                scoreRange: "Диапазон баллов",
+                saveData: "Сохранить данные",
+                loadData: "Загрузить данные"
+            },
+            pt: {
+                title: "Calculadora de GPA",
+                currentGPA: "Insira o GPA atual:",
+                currentCredits: "Insira os créditos atuais:",
+                desiredGPA: "Insira o GPA desejado:",
+                subjectsLabel: "Insira as disciplinas para o próximo semestre:",
+                subjectName: "Nome da disciplina",
+                subjectCredits: "Créditos",
+                subjectNamePlaceholder: "Nome da disciplina",
+                subjectCreditsPlaceholder: "Créditos",
+                addSubject: "Adicionar disciplina",
+                resetForm: "Redefinir formulário",
+                calculateGPA: "Calcular GPA",
+                printResults: "Imprimir resultados",
+                showGradeReference: "Mostrar referência de notas",
+                hideGradeReference: "Ocultar referência de notas",
+                gradeReferenceTitle: "Referência de notas:",
+                grade: "Nota",
+                points: "Pontos",
+                scoreRange: "Intervalo de pontuação",
+                saveData: "Salvar dados",
+                loadData: "Carregar dados"
             }
         };
 
@@ -290,5 +312,168 @@
             }
         });
     </script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-title">GPA Calculator</div>
+        <select id="languageDropdown">
+            <option value="th">ไทย</option>
+            <option value="en">English</option>
+            <option value="zh">中文</option>
+            <option value="hi">हिन्दी</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="ko">한국어</option>
+            <option value="ja">日本語</option>
+            <option value="ru">Русский</option>
+            <option value="pt">Português</option>
+        </select>
+    </div>
+    <div class="container">
+        <h1 data-lang="title">คำนวณเกรดเฉลี่ย (GPAX) </h1>
+        <form id="gradeForm">
+            <div class="form-row">
+                <label for="currentGPA" data-lang="currentGPA">กรอกเกรดเฉลี่ยปัจจุบัน (GPAX)</label>
+                <input type="number" step="0.01" id="currentGPA" name="currentGPA" required>
+                <label for="currentCredits" data-lang="currentCredits">กรอกจำนวนหน่วยกิตปัจจุบัน</label>
+                <input type="number" id="currentCredits" name="currentCredits" required>
+            </div>
+            <label for="desiredGPA" style="font-weight: bold; color: #6a8caf;" data-lang="desiredGPA">กรอกเกรดเฉลี่ยที่ต้องการ(GPAX) </label>
+            <input type="number" step="0.01" id="desiredGPA" name="desiredGPA" class="highlight" required>
+            <div id="subjectsContainer">
+                <label style="font-weight: bold; color: #717274;" data-lang="subjectsLabel">กรอกรายวิชาสำหรับเทอมถัดไป</label>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 0.1%;"></th>
+                            <th style="width: 50%; text-align: left;" data-lang="subjectName">ชื่อวิชา</th>
+                            <th style="width: 50%; text-align: left;" data-lang="subjectCredits">หน่วยกิต</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subjectsTableBody">
+                        <!-- Add 5 subject input fields -->
+                        <tr class="subject">
+                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
+                            <td><input type="text" name="subjectName" placeholder="Subject Name" data-lang-placeholder="subjectNamePlaceholder"></td>
+                            <td><input type="number" name="subjectCredits" placeholder="Credits" data-lang-placeholder="subjectCreditsPlaceholder"></td>
+                        </tr>
+                        <tr class="subject">
+                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
+                            <td><input type="text" name="subjectName" placeholder="Subject Name" data-lang-placeholder="subjectNamePlaceholder"></td>
+                            <td><input type="number" name="subjectCredits" placeholder="Credits" data-lang-placeholder="subjectCreditsPlaceholder"></td>
+                        </tr>
+                        <tr class="subject">
+                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
+                            <td><input type="text" name="subjectName" placeholder="Subject Name" data-lang-placeholder="subjectNamePlaceholder"></td>
+                            <td><input type="number" name="subjectCredits" placeholder="Credits" data-lang-placeholder="subjectCreditsPlaceholder"></td>
+                        </tr>
+                        <tr class="subject">
+                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
+                            <td><input type="text" name="subjectName" placeholder="Subject Name" data-lang-placeholder="subjectNamePlaceholder"></td>
+                            <td><input type="number" name="subjectCredits" placeholder="Credits" data-lang-placeholder="subjectCreditsPlaceholder"></td>
+                        </tr>
+                        <tr class="subject">
+                            <td><button type="button" class="removeSubjectButton"><i class="fas fa-times"></i></button></td>
+                            <td><input type="text" name="subjectName" placeholder="Subject Name" data-lang-placeholder="subjectNamePlaceholder"></td>
+                            <td><input type="number" name="subjectCredits" placeholder="Credits" data-lang-placeholder="subjectCreditsPlaceholder"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><button type="button" id="addSubjectButton" class="addSubjectButton" data-lang="addSubject"><i class="fas fa-plus"></i> เพิ่มรายวิชา</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="buttonContainer">
+                <button type="button" id="resetFormButton" class="resetButton" data-lang="resetForm"><i class="fas fa-redo"></i> รีเซ็ตฟอร์ม</button>
+            </div>
+            <button type="submit" class="calculateButton" data-lang="calculateGPA"><i class="fas fa-calculator"></i> คำนวณเกรดที่ต้องการ</button>
+        </form>
+        <div id="result"></div>
+        <div id="summary"></div>
+
+        <!-- Replace the action buttons container with this new structure -->
+        <div class="action-buttons-container">
+            <div class="action-buttons-group">
+                <button type="button" id="printResultsButton" class="action-button">
+                    <i class="fas fa-print"></i> <span data-lang="printResults">พิมพ์ผลลัพธ์</span>
+                </button>
+                <div class="reference-buttons">
+                    <button type="button" id="showGradeReferenceButton" class="action-button">
+                        <i class="fas fa-eye"></i> <span data-lang="showGradeReference">แสดงเกณฑ์</span>
+                    </button>
+                    <button type="button" id="hideGradeReferenceButton" class="action-button" style="display: none;">
+                        <i class="fas fa-eye-slash"></i> <span data-lang="hideGradeReference">ซ่อนเกณฑ์</span>
+                    </button>
+                </div>
+            </div>
+            <div class="action-buttons-group">
+                <button type="button" id="saveDataButton" class="action-button">
+                    <i class="fas fa-save"></i> <span data-lang="saveData">บันทึก</span>
+                </button>
+                <button type="button" id="loadDataButton" class="action-button">
+                    <i class="fas fa-upload"></i> <span data-lang="loadData">โหลด</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="gradeReference" style="display: none;">
+            <p data-lang="gradeReferenceTitle">เกณฑ์ที่ใช้อ้างอิง:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th data-lang="grade">ผลการเรียน</th>
+                        <th data-lang="points">แต้มคะแนน</th>
+                        <th data-lang="scoreRange">ช่วงคะแนน</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A</td>
+                        <td>4.0</td>
+                        <td>80-100</td>
+                    </tr>
+                    <tr>
+                        <td>B+</td>
+                        <td>3.5</td>
+                        <td>75-79</td>
+                    </tr>
+                    <tr>
+                        <td>B</td>
+                        <td>3.0</td>
+                        <td>70-74</td>
+                    </tr>
+                    <tr>
+                        <td>C+</td>
+                        <td>2.5</td>
+                        <td>65-69</td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                        <td>2.0</td>
+                        <td>60-64</td>
+                    </tr>
+                    <tr>
+                        <td>D+</</td>
+                        <td>1.5</td>
+                        <td>55-59</td>
+                    </tr>
+                    <tr>
+                        <td>D</td>
+                        <td>1.0</td>
+                        <td>50-54</td>
+                    </tr>
+                    <tr>
+                        <td>F</td>
+                        <td>0.0</td>
+                        <td>0-49</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer>
+        © 2025. ธีระพงศ์ เวหะ
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
